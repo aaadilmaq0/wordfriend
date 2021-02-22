@@ -1,0 +1,30 @@
+{
+  "name": "wordfriend_backend",
+  "version": "1.0.0",
+  "description": "this is the wordfriend backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-livereload": "^0.6.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "google-auth-library": "^7.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.17",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "stack-lifo": "^0.1.6",
+    "x-frame-options": "^1.0.0"
+  }
+}
