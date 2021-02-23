@@ -7,8 +7,8 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ApiUrl } from '../config';
 import { AuthService } from '../services/auth.service';
+import { ApiUrl } from '../config';
 @Injectable({
   providedIn: 'root',
 })
