@@ -6,6 +6,7 @@ const async = require("async");
 const client = require("../../config/client");
 const userModel = require("../../models/user.model");
 const logoutTokenModel = require("../../models/logout-token.model");
+const wordModel = require("../../models/word.model");
 
 const completeOAuthSignIn = (req, res) => {
     let { idToken, method } = req.query;
@@ -101,6 +102,23 @@ const checkToken = (req, res, next) => {
                     cb(null);
                 }
             });
+        },
+        cb => {
+            let user = req.user;
+            if(!checkUserTrie(user._id)){
+                addUserTrie(user._id);
+                wordModel.find({ user: user._id })
+                .select({ name: 1})
+                .then(docs => {
+                    docs.forEach(doc => trie.insert(doc.name, user._id));
+                    cb(null);
+                })
+                .catch(error => {
+                    cb(error);
+                });
+            } else{
+                cb(null);
+            }
         }
     ], error => {
         if(error) res.status(500).json(error);
@@ -127,6 +145,7 @@ const logout = (req, res) => {
         cb => {
             new logoutTokenModel({ token }).save()
             .then(() => {
+                deleteUserTrie(req.user._id);
                 cb(null);
             })
             .catch(error => {

@@ -12,8 +12,20 @@ function dictionary(){
 
 global.trie = new dictionary();
 
-dictionary.prototype.insert = word => {
-    let curr = trie;
+global.checkUserTrie = user => {
+    return trie.children[user];
+};
+
+global.addUserTrie = user => {
+    trie.children[user] = new dictionary();
+};
+
+global.deleteUserTrie = user => {
+    delete trie.children[user];
+};
+
+dictionary.prototype.insert = (word,user) => {
+    let curr = trie.children[user];
     for(let i = 0; i < word.length; i++){
         let char = word.charAt(i);
         if(!curr.children[char]) curr.children[char] = new node();
@@ -22,8 +34,8 @@ dictionary.prototype.insert = word => {
     curr.end = true;
 };
 
-dictionary.prototype.search = word => {
-    let curr = trie;
+dictionary.prototype.search = (word,user) => {
+    let curr = trie.children[user];
     for(let i = 0; i < word.length; i++){
         let char = word.charAt(i);
         if(!curr.children[char]) return false;
@@ -32,10 +44,10 @@ dictionary.prototype.search = word => {
     return curr && curr.end;
 };
 
-dictionary.prototype.remove = word => {
+dictionary.prototype.remove = (word,user) => {
     let nodestack = new Stack();
     let charstack = new Stack();
-    let curr = trie;
+    let curr = trie.children[user];
     nodestack.push(curr);
     for(let i = 0; i < word.length; i++){
         let char = word.charAt(i);
@@ -55,14 +67,3 @@ dictionary.prototype.remove = word => {
         nodestack.push(parentNode);
     }
 };
-
-wordModel.find().select({ name: 1 })
-.then(docs => {
-    docs.forEach(doc=>{
-        trie.insert(doc.name);
-    });
-})
-.catch(error => {
-    console.log(error);
-    process.exit(1);
-});
