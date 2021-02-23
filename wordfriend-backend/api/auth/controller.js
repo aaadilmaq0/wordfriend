@@ -7,6 +7,7 @@ const client = require("../../config/client");
 const userModel = require("../../models/user.model");
 const logoutTokenModel = require("../../models/logout-token.model");
 const wordModel = require("../../models/word.model");
+const { use } = require("passport");
 
 const completeOAuthSignIn = (req, res) => {
     let { idToken, method } = req.query;
@@ -48,6 +49,7 @@ const completeOAuthSignIn = (req, res) => {
             .then(async userDoc => {
                 let currentUser = userDoc;
                 if(!userDoc){
+                    user.lastRequest = new Date();
                     let newUser = new userModel(user);
                     try{
                         currentUser = await newUser.save();
@@ -83,7 +85,7 @@ const checkToken = (req, res, next) => {
             .then(count => {
                 if(count){
                     cb({
-                        msg: "Token Expired!"
+                        msg: "Invalid Token / Session Expired"
                     });
                 } else{
                     cb(null);
@@ -101,6 +103,15 @@ const checkToken = (req, res, next) => {
                     req.user = user;
                     cb(null);
                 }
+            });
+        },
+        cb => {
+            userModel.findByIdAndUpdate(req.user._id, { lastRequest: new Date() })
+            .then(() => {
+                cb(null);
+            })
+            .catch(error => {
+                cb(error);
             });
         },
         cb => {
@@ -139,13 +150,14 @@ const logout = (req, res) => {
                     msg: "Token Missing!"
                 });
             } else{
-                cb(null);
+                let user = jwt.decode(token, { complete: true }).payload;
+                deleteUserTrie(user._id);
+                cb(null);                
             }
         },
         cb => {
             new logoutTokenModel({ token }).save()
             .then(() => {
-                deleteUserTrie(req.user._id);
                 cb(null);
             })
             .catch(error => {
@@ -153,7 +165,8 @@ const logout = (req, res) => {
             });
         }
     ], error => {
-        if(error) res,status(500).json(error);
+        console.log(error);
+        if(error) res.status(500).json(error);
         else res.status(200).json();
     });
 };

@@ -12,3 +12,6 @@ require("./trie");
 
 // Creating Routes
 require("./routes")(app);
+
+// Starting Scheduled Workers
+require("./workers");
