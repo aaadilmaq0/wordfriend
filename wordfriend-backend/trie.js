@@ -67,3 +67,30 @@ dictionary.prototype.remove = (word,user) => {
         nodestack.push(parentNode);
     }
 };
+
+dictionary.prototype.getAllWords = user => {
+    let words = [];
+    let curr = trie.children[user];
+    findAllWords(curr, words, "");
+    return words;
+};
+
+dictionary.prototype.getStartsWith = (char, user) => {
+    let words = [];
+    let curr = trie.children[user];
+    if(!curr.children || !curr.children[char]) return words;
+    findAllWords(curr.children[char], words, char);
+    return words;
+};
+
+const findAllWords = (curr, words, currentWord) => {
+    if(currentWord && curr.end){
+        words.push(currentWord);
+    }
+    if(!curr.children) return;
+    let keys = Object.keys(curr.children);
+    keys = keys.sort();
+    for(let key of keys){
+        findAllWords(curr.children[key], words, currentWord+key);
+    }
+};

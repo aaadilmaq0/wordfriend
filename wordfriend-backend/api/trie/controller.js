@@ -92,9 +92,60 @@ const remove = (req, res) => {
     });
 };
 
+const getAllWords = (req, res) => {
+    res.status(200).json({ words: trie.getAllWords(req.user._id) });
+};
+
+const getStartsWith = (req, res) => {
+    res.status(200).json({ words: trie.getStartsWith(req.params.char, req.user._id) })
+};
+
+const multiDetails = (req, res) => {
+    let { words } = req.body;
+    async.waterfall([
+        cb => {
+            if(!words){
+                cb({
+                    msg: "words required in request body!"
+                });
+            } else{
+                cb(null);
+            }
+        },
+        cb => {
+            wordModel.find({
+                $and:[
+                    {
+                        name:{
+                            $in: words
+                        }
+                    },
+                    {
+                        user: req.user._id
+                    }
+                ]
+            })
+            .then(docs => {
+                let details = {};
+                for(let doc of docs) details[doc.name] = { meaning: doc.meaning, example: doc.example };
+                cb(null, details);
+            })
+            .catch(error => {
+                cb(error);
+            });
+        }
+    ], (error, details) => {
+        if(error) res.status(500).json(error);
+        else res.status(200).json(details);
+    });
+};
+
 module.exports = {
     insert,
     search,
     details,
-    remove
+    remove,
+    getAllWords,
+    getStartsWith,
+    multiDetails
 };

@@ -4,8 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from '@angular/forms';
-import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from "angularx-social-login";
 import { googleClientId } from './config';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthService } from './services/auth.service';
@@ -13,6 +12,11 @@ import { HttpClientModule } from "@angular/common/http"
 import { httpInterceptorProviders } from './http-interceptor';
 import { AuthGuardService } from './services/auth-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
+import { TrieService } from './services/trie.service';
+import { FormsModule } from '@angular/forms';
+import { MainModule } from './main/main.module';
+import { AuthModule } from './auth/auth.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -21,10 +25,12 @@ import { LoginGuardService } from './services/login-guard.service';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule,
     SocialLoginModule,
     ToastrModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    MainModule,
+    AuthModule
   ],
   providers: [
     httpInterceptorProviders,
@@ -42,7 +48,8 @@ import { LoginGuardService } from './services/login-guard.service';
     },
     AuthService,
     AuthGuardService,
-    LoginGuardService
+    LoginGuardService,
+    TrieService
   ],
   bootstrap: [AppComponent]
 })

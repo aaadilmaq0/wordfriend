@@ -1,1 +1,44 @@
-<button type="button" (click)="logout()" >logout</button>
+<div class="main"></div>
+<div class="overlay">
+    <p class="appname">hey,{{ auth.user.firstName }}!</p>
+    <div class="controls" *ngIf="!search">
+        <button mat-icon-button (click)="startSearch()" matTooltip="find a word"><span class="material-icons">search</span></button>
+        <button mat-icon-button (click)="logout()" matTooltip="add a word"><span class="material-icons">add</span></button>
+        <button mat-icon-button *ngIf="canExpandAll()" (click)="expandAll()" matTooltip="expand all words"><span class="material-icons">unfold_more</span></button>
+        <button mat-icon-button *ngIf="!canExpandAll()" (click)="selectedWords = {}" matTooltip="collapse all"><span class="material-icons">unfold_less</span></button>
+        <button mat-icon-button class="logout" (click)="logout()" matTooltip="logout"><span class="material-icons">logout</span></button>
+    </div>
+    <div class="search" *ngIf="search">
+        <input type="text" (input)="handleSearchText($event)" placeholder="search text">
+        <button mat-icon-button (click)="closeSearch()"><span class="material-icons">cancel</span></button>
+    </div>
+    <div class="alphabets">
+        <div class="alphabet" (click)="selectedChar='⁎'; getWords()" matTooltip="all words" [ngStyle]="{ 'color': selectedChar==='⁎' ? 'red' : '' }">⁎</div>
+        <div class="alphabet" *ngFor="let letter of letters" (click)="selectedChar=letter; getWords()" [matTooltip]="'words starting with '+letter" [ngStyle]="{ 'color': selectedChar===letter ? 'red' : '' }">{{ letter }}</div>
+    </div>
+    <div class="words">
+        <div class="word" *ngFor="let word of getAllWords()">
+            <p class="name" >
+                <span (click)="getWordDetails(word)" [ngStyle]="{'text-decoration': selectedWords[word] ? 'underline' : ''}"  [matTooltip]="!selectedWords[word] ? 'click to view meaning of '+word : 'click to close meaning of '+word">{{ word }}</span>
+            </p>
+            <ng-container *ngIf="selectedWords[word]">
+                <div class="wordControls">
+                    <button mat-icon-button (click)="wordToDelete=word" [matTooltip]="'delete '+word"><span class="material-icons">delete</span></button>
+                    <button mat-icon-button (click)="edit(word)" [matTooltip]="'edit '+word"><span class="material-icons">edit</span></button>
+                </div>
+                <p class="meaning">{{ selectedWords[word].meaning }}</p>
+                <p class="example">"{{ selectedWords[word].example }}"</p>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<div class="delete" *ngIf="wordToDelete">
+    <div class="confirmation">
+        <p>do you really want to <span>delete</span> the word "{{ wordToDelete }}"?</p>
+        <br>
+        <div class="deleteControls">
+            <button class="yes" mat-icon-button (click)="delete(wordToDelete)"><span class="material-icons">check</span></button>
+            <button class="no" mat-icon-button (click)="wordToDelete=null"><span class="material-icons">close</span></button>
+        </div>
+    </div>
+</div>

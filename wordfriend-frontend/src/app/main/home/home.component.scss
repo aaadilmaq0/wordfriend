@@ -1,0 +1,383 @@
+@import "../../../styles.scss";
+.main{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-image: url("../../../assets/login-bg.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    z-index: 0;
+}
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto;
+    z-index: 1;
+    padding: 0 0 0 10px;
+    box-sizing:border-box;
+    .appname{
+        margin: 0;
+        padding: 0;
+        color: white;
+        font-weight: 1000;
+    }
+    .controls{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: left;
+        align-items: center;
+        background: none;
+        button{
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            &:hover{
+                color: $coffee;
+            }
+        }
+        .logout{
+            transform: rotate(180deg);
+        }
+    }
+    .search{
+        position: absolute;
+        bottom: 2px;
+        left: 2px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: left;
+        align-items: center;
+        background: none;
+        input{
+            background: none;
+            border:none;
+            border-bottom: 1px solid $coffee;
+            padding: 5px 10px;
+            outline: none;
+            color: white;
+            font-family: $font !important;
+            text-align: center;
+        }
+    }
+    .alphabets{
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        overflow: hidden auto;
+        background-color: transparent;
+        display: flex;
+        flex-flow: column nowrap;
+        color: $coffee;
+        background-color: rgba(170, 29, 29, 0.2);
+        border-radius: 20px 0 0 20px;
+        .alphabet{
+            text-align: center;
+            cursor: pointer;
+            &:hover{
+                font-weight: 700;
+            }
+        }
+        &::-webkit-scrollbar-track {
+            background-color: black !important;
+            border-radius: 10px;
+        }
+    }
+    .words{
+        position: absolute;
+        top: 50%;
+        left: calc(50% - 30px);
+        transform: translate(-50%,-50%);
+        height: calc(100% - 100px);
+        max-height: 80%;
+        width: calc(100% - 130px);
+        max-width: 85%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: none;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 20px;
+        .word{
+            margin: auto;
+            p{
+                margin: 0 0 10px 0;
+                padding: 0;
+                text-align: center;
+            }
+            .name{
+                color: $coffee;
+                span{
+                    &:hover{
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
+            }
+            .meaning{
+                color: white;
+            }
+            .example{
+                color: rgb(255, 195, 195);
+                font-style: italic;
+            }
+            .wordControls{
+                margin: 0;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+                button{
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    color: white;
+                    margin: 0 2px 0 2px;
+                    &:hover{
+                        color: $coffee;
+                    }
+                }
+            }
+        }
+    }
+}
+.delete{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    overflow: auto;
+    z-index: 2;
+    padding: 0 0 0 10px;
+    box-sizing:border-box;
+    .confirmation{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        p{
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            color: $coffee;
+            text-align: center;
+            span{
+                color: $google;
+            }
+        }
+        .deleteControls{
+            margin: 0;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-evenly;
+            align-items: center;
+            button{
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: white;
+                margin: 0 2px 0 2px;
+            }
+            .yes:hover{
+                color: $google;
+            }
+            .no:hover{
+                color: greenyellow;
+            }
+        }
+    }
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px){
+    .overlay{
+        .appname{
+            letter-spacing: 2px;
+            font-size: 20px;
+        }
+        .controls{
+            // right: 45px;
+            button{
+                .material-icons{
+                    font-size: 22px;
+                }
+            }
+        }
+        .alphabets{
+            width: 40px;            
+            font-size: 30px;
+            .alphabet{
+                &:hover{
+                    font-size: 35px;
+                }
+            }
+        }
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .overlay{
+        .appname{
+            letter-spacing: 4px;
+            font-size: 25px;
+        }
+        .controls{
+            // right: 50px;
+            button{
+                .material-icons{
+                    font-size: 26px;
+                }
+            }
+        }
+        .alphabets{
+            width: 45px;            
+            font-size: 32px;
+            .alphabet{
+                &:hover{
+                    font-size: 40px;
+                }
+            }
+        }
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .overlay{
+        .appname{
+            letter-spacing: 5px;
+            font-size: 30px;
+        }
+        .controls{
+            // right: 55px;
+            button{
+                .material-icons{
+                    font-size: 30px;
+                }
+            }
+        }
+        .alphabets{
+            width: 50px;            
+            font-size: 35px;
+            .alphabet{
+                &:hover{
+                    font-size: 45px;
+                }
+            }
+        }
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .overlay{
+        .appname{
+            letter-spacing: 6px;
+            font-size: 35px;
+        }
+        .controls{
+            // right: 60px;
+            button{
+                .material-icons{
+                    font-size: 38px;
+                }
+            }
+        }
+        .alphabets{
+            width: 55px;            
+            font-size: 45px;
+            .alphabet{
+                &:hover{
+                    font-size: 50px;
+                }
+            }
+        }
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .overlay{
+        .appname{
+            letter-spacing: 7px;
+            font-size: 40px;
+        }
+        .controls{
+            button{
+                .material-icons{
+                    font-size: 40px;
+                }
+            }
+        }
+        .search{
+            input{
+                width: 200px;
+                font-size: 40px;
+            }
+            button{
+                color: white;
+                .material-icons{
+                    font-size: 40px;
+                }
+                &:hover{
+                    color: $coffee;
+                }
+            }
+        }
+        .alphabets{
+            width: 65px;            
+            font-size: 50px;
+            .alphabet{
+                &:hover{
+                    font-size: 60px;
+                }
+            }
+        }
+        .words{
+            .word{
+                margin: 20px 0 20px 0;
+                .name{
+                    font-size: 70px;
+                }
+                .meaning,.example{
+                    font-size: 50px;
+                }
+                .wordControls{
+                    button{
+                        .material-icons{
+                            font-size: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .delete{
+        .confirmation{
+            width: 800px;
+            p{
+                font-size: 60px;
+            }
+            .deleteControls{
+                button{
+                    .material-icons{
+                        font-size: 40px;
+                    }
+                }
+            }
+        }
+    }
+}

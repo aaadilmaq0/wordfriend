@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { user } from '../app.model';
 
 const uri = "/api/auth"
 
@@ -9,7 +10,7 @@ const uri = "/api/auth"
 })
 export class AuthService {
 
-  user:any = null;
+  user:user = null;
 
   constructor(private http:HttpClient, private router: Router) { }
 

@@ -6,5 +6,8 @@ router.put("/insert", checkToken ,controller.insert);
 router.head("/search/:word", checkToken ,controller.search);
 router.get("/details/:word", checkToken ,controller.details);
 router.delete("/remove/:word", checkToken ,controller.remove);
+router.get("/getAllWords", checkToken, controller.getAllWords);
+router.get("/getStartsWith/:char", checkToken, controller.getStartsWith);
+router.post("/multiDetails", checkToken, controller.multiDetails);
 
 module.exports = router;
