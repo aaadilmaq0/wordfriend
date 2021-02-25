@@ -49,64 +49,15 @@
             transform: rotate(180deg);
         }
     }
-    .search{
-        position: absolute;
-        bottom: 2px;
-        left: 2px;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: left;
-        align-items: center;
-        background: none;
-        input{
-            background: none;
-            border:none;
-            border-bottom: 1px solid $coffee;
-            padding: 5px 10px;
-            outline: none;
-            color: white;
-            font-family: $font !important;
-            text-align: center;
-        }
-        button{
-            color: white;
-            &:hover{
-                color: $coffee;
-            }
-        }
-    }
-    .alphabets{
-        position: fixed;
-        top: 0;
-        right: 0;
-        height: 100%;
-        overflow: hidden auto;
-        background-color: transparent;
-        display: flex;
-        flex-flow: column nowrap;
-        color: $coffee;
-        background-color: rgba(170, 29, 29, 0.2);
-        border-radius: 20px 0 0 20px;
-        .alphabet{
-            text-align: center;
-            cursor: pointer;
-            &:hover{
-                font-weight: 700;
-            }
-        }
-        &::-webkit-scrollbar-track {
-            background-color: black !important;
-            border-radius: 10px;
-        }
-    }
+
     .words{
         position: absolute;
         top: 50%;
-        left: calc(50% - 30px);
+        left: 50%;
         transform: translate(-50%,-50%);
         height: calc(100% - 100px);
         max-height: 80%;
-        width: calc(100% - 130px);
+        width: calc(100% - 100px);
         max-width: 85%;
         overflow-x: hidden;
         overflow-y: auto;
@@ -117,44 +68,49 @@
         padding: 20px;
         .word{
             margin: auto;
-            p{
-                margin: 0 0 10px 0;
-                padding: 0;
+            width: 100%;
+            input{
+                display: block;
+                margin: 0 auto 10px auto;
                 text-align: center;
-                word-wrap: break-word;
-                hyphens: auto;
+                background: none;
+                border:none;
+                padding: 5px 10px;
+                outline: none;
+                font-family: $font !important;
+                text-align: center;
             }
             .name{
+                border-bottom: 1px solid $coffee;
                 color: $coffee;
-                span{
-                    &:hover{
-                        cursor: pointer;
-                        text-decoration: underline;
-                    }
-                }
+                width: 50%;
             }
             .meaning{
+                border-bottom: 1px solid white;
                 color: white;
+                width: 62.5%;
             }
             .example{
+                border-bottom: 1px solid rgb(255, 195, 195);
                 color: rgb(255, 195, 195);
                 font-style: italic;
+                width: 80%;
             }
-            .wordControls{
-                margin: 0;
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: center;
-                align-items: center;
-                button{
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    color: white;
-                    margin: 0 2px 0 2px;
-                    &:hover{
-                        color: $coffee;
-                    }
+        }
+        .wordControls{
+            margin: 0;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-evenly;
+            align-items: center;
+            button{
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: white;
+                margin: 0 2px 0 2px;
+                &:hover{
+                    color: $coffee;
                 }
             }
         }
@@ -223,40 +179,20 @@
                 }
             }
         }
-        .search{
-            input{
-                width: 120px;
-                font-size: 24px;
-            }
-            button{
-                .material-icons{
-                    font-size: 24px;
-                }
-            }
-        }
-        .alphabets{
-            width: 40px;            
-            font-size: 30px;
-            .alphabet{
-                &:hover{
-                    font-size: 35px;
-                }
-            }
-        }
         .words{
             .word{
                 margin: 12px 0 12px 0;
                 .name{
-                    font-size: 45px;
+                    font-size: 35px;
                 }
                 .meaning,.example{
-                    font-size: 34px;
+                    font-size: 30px;
                 }
-                .wordControls{
-                    button{
-                        .material-icons{
-                            font-size: 16px;
-                        }
+            }
+            .wordControls{
+                button{
+                    .material-icons{
+                        font-size: 24px;
                     }
                 }
             }
@@ -278,7 +214,6 @@
         }
     }
 }
-
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
     .overlay{
@@ -294,40 +229,20 @@
                 }
             }
         }
-        .search{
-            input{
-                width: 140px;
-                font-size: 28px;
-            }
-            button{
-                .material-icons{
-                    font-size: 28px;
-                }
-            }
-        }
-        .alphabets{
-            width: 45px;            
-            font-size: 32px;
-            .alphabet{
-                &:hover{
-                    font-size: 40px;
-                }
-            }
-        }
         .words{
             .word{
                 margin: 14px 0 14px 0;
                 .name{
-                    font-size: 50px;
+                    font-size: 40px;
                 }
                 .meaning,.example{
-                    font-size: 38px;
+                    font-size: 45px;
                 }
-                .wordControls{
-                    button{
-                        .material-icons{
-                            font-size: 18px;
-                        }
+            }
+            .wordControls{
+                button{
+                    .material-icons{
+                        font-size: 28px;
                     }
                 }
             }
@@ -365,26 +280,6 @@
                 }
             }
         }
-        .search{
-            input{
-                width: 160px;
-                font-size: 32px;
-            }
-            button{
-                .material-icons{
-                    font-size: 32px;
-                }
-            }
-        }
-        .alphabets{
-            width: 50px;            
-            font-size: 35px;
-            .alphabet{
-                &:hover{
-                    font-size: 45px;
-                }
-            }
-        }
         .words{
             .word{
                 margin: 16px 0 16px 0;
@@ -394,11 +289,11 @@
                 .meaning,.example{
                     font-size: 42px;
                 }
-                .wordControls{
-                    button{
-                        .material-icons{
-                            font-size: 20px;
-                        }
+            }
+            .wordControls{
+                button{
+                    .material-icons{
+                        font-size: 32px;
                     }
                 }
             }
@@ -436,26 +331,6 @@
                 }
             }
         }
-        .search{
-            input{
-                width: 180px;
-                font-size: 36px;
-            }
-            button{
-                .material-icons{
-                    font-size: 36px;
-                }
-            }
-        }
-        .alphabets{
-            width: 55px;            
-            font-size: 45px;
-            .alphabet{
-                &:hover{
-                    font-size: 50px;
-                }
-            }
-        }
         .words{
             .word{
                 margin: 18px 0 18px 0;
@@ -465,11 +340,11 @@
                 .meaning,.example{
                     font-size: 46px;
                 }
-                .wordControls{
-                    button{
-                        .material-icons{
-                            font-size: 22px;
-                        }
+            }
+            .wordControls{
+                button{
+                    .material-icons{
+                        font-size: 36px;
                     }
                 }
             }
@@ -506,26 +381,6 @@
                 }
             }
         }
-        .search{
-            input{
-                width: 200px;
-                font-size: 40px;
-            }
-            button{
-                .material-icons{
-                    font-size: 40px;
-                }
-            }
-        }
-        .alphabets{
-            width: 65px;            
-            font-size: 50px;
-            .alphabet{
-                &:hover{
-                    font-size: 60px;
-                }
-            }
-        }
         .words{
             .word{
                 margin: 20px 0 20px 0;
@@ -535,11 +390,11 @@
                 .meaning,.example{
                     font-size: 50px;
                 }
-                .wordControls{
-                    button{
-                        .material-icons{
-                            font-size: 25px;
-                        }
+            }
+            .wordControls{
+                button{
+                    .material-icons{
+                        font-size: 40px;
                     }
                 }
             }

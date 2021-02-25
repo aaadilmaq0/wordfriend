@@ -3,13 +3,13 @@
     <p class="appname">hey,{{ auth.user.firstName }}!</p>
     <div class="controls" *ngIf="!search">
         <button mat-icon-button (click)="startSearch()" matTooltip="find a word"><span class="material-icons">search</span></button>
-        <button mat-icon-button (click)="logout()" matTooltip="add a word"><span class="material-icons">add</span></button>
+        <button mat-icon-button (click)="addWords()()" matTooltip="add words"><span class="material-icons">add</span></button>
         <button mat-icon-button *ngIf="canExpandAll()" (click)="expandAll()" matTooltip="expand all words"><span class="material-icons">unfold_more</span></button>
         <button mat-icon-button *ngIf="!canExpandAll()" (click)="selectedWords = {}" matTooltip="collapse all"><span class="material-icons">unfold_less</span></button>
-        <button mat-icon-button class="logout" (click)="logout()" matTooltip="logout"><span class="material-icons">logout</span></button>
+        <button mat-icon-button class="logout" (click)="logout=true" matTooltip="logout"><span class="material-icons">logout</span></button>
     </div>
     <div class="search" *ngIf="search">
-        <input type="text" (input)="handleSearchText($event)" placeholder="search text">
+        <input #input type="text" (input)="handleSearchText($event)" (keyup.esc)="closeSearch()" placeholder="search text">
         <button mat-icon-button (click)="closeSearch()"><span class="material-icons">cancel</span></button>
     </div>
     <div class="alphabets">
@@ -27,8 +27,12 @@
                     <button mat-icon-button (click)="edit(word)" [matTooltip]="'edit '+word"><span class="material-icons">edit</span></button>
                 </div>
                 <p class="meaning">{{ selectedWords[word].meaning }}</p>
-                <p class="example">"{{ selectedWords[word].example }}"</p>
+                <p class="example" *ngIf="selectedWords[word].example">"{{ selectedWords[word].example }}"</p>
             </ng-container>
+        </div>
+        <div class="word" *ngIf="!getAllWords().length">
+            <p class="name">no words found</p>
+            <p class="example"><span (click)="addWords()" style="cursor: pointer;"><u>add words</u></span></p>
         </div>
     </div>
 </div>
@@ -39,6 +43,16 @@
         <div class="deleteControls">
             <button class="yes" mat-icon-button (click)="delete(wordToDelete)"><span class="material-icons">check</span></button>
             <button class="no" mat-icon-button (click)="wordToDelete=null"><span class="material-icons">close</span></button>
+        </div>
+    </div>
+</div>
+<div class="delete" *ngIf="logout">
+    <div class="confirmation">
+        <p>do you really want to <span>logout</span>?</p>
+        <br>
+        <div class="deleteControls">
+            <button class="yes" mat-icon-button (click)="auth.startLogout(); logout=false;"><span class="material-icons">check</span></button>
+            <button class="no" mat-icon-button (click)="logout=false"><span class="material-icons">close</span></button>
         </div>
     </div>
 </div>

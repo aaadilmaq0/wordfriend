@@ -1,0 +1,43 @@
+<div class="main"></div>
+<div class="overlay" *ngIf="target && (target==='add' || (target==='edit' && wordToEdit))">
+    <p class="appname" >{{ target==='add' ? 'add words' : 'edit '+wordToEdit }}</p>
+    <div class="controls">
+        <button mat-icon-button (click)="goBack()" matTooltip="home"><span class="material-icons">home</span></button>
+        <button class="logout" mat-icon-button (click)="logout=true" matTooltip="logout"><span class="material-icons">logout</span></button>
+    </div>
+    <div class="words">
+        <div class="word" *ngFor="let word of words; let i = index">
+            <input type="text" class="name" [(ngModel)]="word.name" placeholder="word*" [disabled]="target==='edit'">
+            <input type="text" class="meaning" [(ngModel)]="word.meaning" placeholder="meaning*">
+            <input type="text" class="example" [(ngModel)]="word.example" placeholder="example">
+            <div class="wordControls">
+                <button *ngIf="target==='add'" mat-icon-button (click)="words.splice(i,1)" matTooltip="remove this word"><span class="material-icons">remove_circle</span></button>
+                <button *ngIf="target==='edit'" mat-icon-button (click)="deleteWord=true" matTooltip="delete this word"><span class="material-icons">delete</span></button>
+            </div>
+        </div>
+        <div class="wordControls">
+            <button *ngIf="target==='add'" mat-icon-button (click)="newWord()"><span class="material-icons" matTooltip="add new word">add_circle</span></button>
+            <button *ngIf="!incomplete()" mat-icon-button (click)="addWords()"><span class="material-icons" matTooltip="done & submit">done_all</span></button>
+        </div>
+    </div>
+</div>
+<div class="delete" *ngIf="deleteWord">
+    <div class="confirmation">
+        <p>do you really want to <span>delete</span> the word "{{ words[0].name }}"?</p>
+        <br>
+        <div class="deleteControls">
+            <button class="yes" mat-icon-button (click)="delete(words[0].name)"><span class="material-icons">check</span></button>
+            <button class="no" mat-icon-button (click)="deleteWord=false"><span class="material-icons">close</span></button>
+        </div>
+    </div>
+</div>
+<div class="delete" *ngIf="logout">
+    <div class="confirmation">
+        <p>do you really want to <span>logout</span>?</p>
+        <br>
+        <div class="deleteControls">
+            <button class="yes" mat-icon-button (click)="auth.startLogout(); logout=false;"><span class="material-icons">check</span></button>
+            <button class="no" mat-icon-button (click)="logout=false"><span class="material-icons">close</span></button>
+        </div>
+    </div>
+</div>

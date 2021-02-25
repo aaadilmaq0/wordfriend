@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { user } from '../app.model';
 
 const uri = "/api/auth"
@@ -12,7 +13,7 @@ export class AuthService {
 
   user:user = null;
 
-  constructor(private http:HttpClient, private router: Router) { }
+  constructor(private http:HttpClient, private router: Router, private toastr: ToastrService) { }
 
   completeOAuthSignIn(idToken, method){
     return this.http.get(`${uri}/completeOAuthSignIn`, { params: { idToken, method }});
@@ -37,7 +38,13 @@ export class AuthService {
 
   startLogout(){
     let token = this.getToken();
-    return this.http.get(`${uri}/logout`, { params: { token }});
+    this.http.get(`${uri}/logout`, { params: { token }}).toPromise()
+    .then(() => {
+      this.logout();
+    })
+    .catch(error => {
+      this.toastr.error(error.error && error.error.msg ? error.error.msg : "Error Logging Out!");
+    });
   }
 
   logout(){

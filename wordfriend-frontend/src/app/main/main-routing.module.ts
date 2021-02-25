@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { InsertComponent } from './insert/insert.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,16 @@ const routes: Routes = [
     path: "home",
     pathMatch: "full",
     component: HomeComponent
+  },
+  {
+    path: "add",
+    pathMatch: "full",
+    component: InsertComponent
+  },
+  {
+    path: "edit/:wordToEdit",
+    pathMatch: "full",
+    component: InsertComponent
   }
 ];
 

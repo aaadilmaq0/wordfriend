@@ -14,8 +14,6 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
 import { TrieService } from './services/trie.service';
 import { FormsModule } from '@angular/forms';
-import { MainModule } from './main/main.module';
-import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -28,9 +26,7 @@ import { AuthModule } from './auth/auth.module';
     SocialLoginModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    FormsModule,
-    MainModule,
-    AuthModule
+    FormsModule
   ],
   providers: [
     httpInterceptorProviders,

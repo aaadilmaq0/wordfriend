@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { TrieService } from 'src/app/services/trie.service';
@@ -10,6 +11,8 @@ import { TrieService } from 'src/app/services/trie.service';
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild("input") searchInputElement: ElementRef;
+
   all: string = "⁎";
   letters = "abcdefghijklmnopqrstuvwxyz".split("");
   allWords: string[] = [];
@@ -18,15 +21,16 @@ export class HomeComponent implements OnInit {
   wordToDelete: string = null;
   search: boolean = false;
   searchText: string = "";
+  logout: boolean = false;
 
   constructor(
     public auth:AuthService,
     private trie:TrieService,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
-    setInterval(()=>console.log(this.searchText),1000)
     this.selectedChar = this.all;
     this.getWords();
   }
@@ -92,6 +96,7 @@ export class HomeComponent implements OnInit {
     this.selectedChar = this.all;
     this.getWords();
     this.search = true;
+    setTimeout(() => this.searchInputElement.nativeElement.focus(), 0);
   }
 
   handleSearchText(event){
@@ -111,14 +116,12 @@ export class HomeComponent implements OnInit {
     this.searchText = "";
   }
 
-  logout(){
-    this.auth.startLogout().toPromise()
-    .then(() => {
-      this.auth.logout();
-    })
-    .catch(error => {
-      this.toastr.error(error.error && error.error.msg ? error.error.msg : "Error Logging Out!");
-    });
+  addWords(){
+    this.router.navigate(["main","add"]);
+  }
+
+  edit(word){
+    this.router.navigate(["main","edit",word]);
   }
 
 }

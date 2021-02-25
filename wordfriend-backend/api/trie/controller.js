@@ -2,27 +2,36 @@ const async = require("async");
 const wordModel = require("../../models/word.model");
 
 const insert = (req, res) => {
-    let { word } = req.body;
+    let { words } = req.body;
     async.waterfall([
         cb => {
-            if(!word || !word.name || !word.meaning){
+            if(!words || words.find(word => !word.name || !word.meaning)){
                 cb({
                     msg: "Word { name, meaning } required in Body!"
                 });
             } else{
-                trie.insert(word.name, req.user._id);
+                for(let word of words) trie.insert(word.name, req.user._id);
                 cb(null);
             }
         },
         cb => {
-            word.user = req.user._id;
-            let newTrieDoc = new wordModel(word);
-            newTrieDoc.save()
-            .then(() => {
-                cb(null);
-            })
-            .catch(error => {
-                cb(error);
+            let f = [];
+            for(let word of words){
+                f.push(cb2 => {
+                    word.user = req.user._id;
+                    let newTrieDoc = new wordModel(word);
+                    newTrieDoc.save()
+                    .then(() => {
+                        cb2(null);
+                    })
+                    .catch(error => {
+                        cb2(error);
+                    });
+                });
+            }
+            async.parallelLimit(f, 5, error => {
+                if(error) cb(error);
+                else cb(null);
             });
         }
     ], error => {
@@ -92,6 +101,42 @@ const remove = (req, res) => {
     });
 };
 
+const update = (req, res) => {
+    let { word } = req.body;
+    async.waterfall([
+        cb => {
+            if(!word || !word.name || !word.meaning){
+                cb({
+                    msg: "Word { name, meaning } required in Body!"
+                })
+            } else{
+                cb(null);
+            }
+        },
+        cb => {
+            if(!trie.search(word.name, req.user._id)){
+                cb({
+                    msg: "Word Not Found"
+                });
+            } else{
+                cb(null);
+            }
+        },
+        cb => {
+            wordModel.findOneAndUpdate({ name: word.name }, word)
+            .then(() => {
+                cb(null);
+            })
+            .catch(error => {
+                cb(error);
+            });
+        }
+    ], error => {
+        if(error) res.status(500).json(error);
+        else res.status(200).json();
+    });
+};
+
 const getAllWords = (req, res) => {
     res.status(200).json({ words: trie.getAllWords(req.user._id) });
 };
@@ -147,5 +192,6 @@ module.exports = {
     remove,
     getAllWords,
     getStartsWith,
-    multiDetails
+    multiDetails,
+    update
 };

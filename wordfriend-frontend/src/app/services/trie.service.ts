@@ -11,8 +11,8 @@ export class TrieService {
 
   constructor(private http:HttpClient) { }
 
-insert(word:word){
-    return this.http.put<any>(`${uri}/insert`, { word });
+  insert(words:word[]){
+    return this.http.put<any>(`${uri}/insert`, { words });
   }
 
   search(word:string){
@@ -37,5 +37,9 @@ insert(word:word){
 
   multiDetails(words){
     return this.http.post<any>(`${uri}/multiDetails`, { words });
+  }
+
+  update(word:word){
+    return this.http.post<any>(`${uri}/update`, { word });
   }
 }

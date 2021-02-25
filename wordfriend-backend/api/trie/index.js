@@ -9,5 +9,6 @@ router.delete("/remove/:word", checkToken ,controller.remove);
 router.get("/getAllWords", checkToken, controller.getAllWords);
 router.get("/getStartsWith/:char", checkToken, controller.getStartsWith);
 router.post("/multiDetails", checkToken, controller.multiDetails);
+router.post("/update", checkToken, controller.update);
 
 module.exports = router;
