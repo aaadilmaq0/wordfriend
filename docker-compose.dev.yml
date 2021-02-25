@@ -10,6 +10,16 @@ services:
     volumes:
       - /wordfriend:/data/db
 
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+    depends_on:
+      - wordfriend-backend
+      - wordfriend-frontend
+
   wordfriend-backend:
     build:
       dockerfile: Dockerfile.dev
@@ -24,6 +34,8 @@ services:
       - port=3000
       - mode=dev
     restart: always
+    depends_on:
+      - mongo
 
   wordfriend-frontend:
     build:
@@ -33,3 +45,6 @@ services:
       - ./wordfriend-frontend:/app
     ports:
       - "4200:4200"
+    depends_on:
+      - mongo
+      - wordfriend-backend

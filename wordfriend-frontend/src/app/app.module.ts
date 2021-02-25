@@ -14,6 +14,8 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
 import { TrieService } from './services/trie.service';
 import { FormsModule } from '@angular/forms';
+import { SpinnerService } from './services/spinner.service';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     SocialLoginModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [
     httpInterceptorProviders,
@@ -45,7 +48,8 @@ import { FormsModule } from '@angular/forms';
     AuthService,
     AuthGuardService,
     LoginGuardService,
-    TrieService
+    TrieService,
+    SpinnerService
   ],
   bootstrap: [AppComponent]
 })
