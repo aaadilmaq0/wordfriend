@@ -10,16 +10,6 @@ services:
     volumes:
       - /wordfriend:/data/db
 
-  nginx:
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
-    ports:
-      - "3050:80"
-    depends_on:
-      - wordfriend-backend
-      - wordfriend-frontend
-
   wordfriend-backend:
     build:
       dockerfile: Dockerfile.dev

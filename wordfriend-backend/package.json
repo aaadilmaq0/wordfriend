@@ -4,7 +4,7 @@
   "description": "this is the wordfriend backend",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon bin/www",
     "start": "node --watch server bin/www"
   }, 
   "author": "",
