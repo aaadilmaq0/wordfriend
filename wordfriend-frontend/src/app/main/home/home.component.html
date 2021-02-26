@@ -4,8 +4,8 @@
     <div class="controls" *ngIf="!search">
         <button mat-icon-button (click)="startSearch()" matTooltip="find a word"><span class="material-icons">search</span></button>
         <button mat-icon-button (click)="addWords()()" matTooltip="add words"><span class="material-icons">add</span></button>
-        <button mat-icon-button *ngIf="canExpandAll()" (click)="expandAll()" matTooltip="expand all words"><span class="material-icons">unfold_more</span></button>
-        <button mat-icon-button *ngIf="!canExpandAll()" (click)="selectedWords = {}" matTooltip="collapse all"><span class="material-icons">unfold_less</span></button>
+        <button mat-icon-button *ngIf="getAllWords().length && canExpandAll()" (click)="expandAll()" matTooltip="expand all words"><span class="material-icons">unfold_more</span></button>
+        <button mat-icon-button *ngIf="getAllWords().length && !canExpandAll()" (click)="selectedWords = {}" matTooltip="collapse all"><span class="material-icons">unfold_less</span></button>
         <button mat-icon-button class="logout" (click)="logout=true" matTooltip="logout"><span class="material-icons">logout</span></button>
     </div>
     <div class="search" *ngIf="search">

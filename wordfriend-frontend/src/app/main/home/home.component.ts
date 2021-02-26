@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
   }
 
   canExpandAll(){
-    return this.allWords.length && this.allWords.find(word =>!this.selectedWords[word]);
+    return this.allWords.find(word =>!this.selectedWords[word]);
   }
 
   expandAll(){

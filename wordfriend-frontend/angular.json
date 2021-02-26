@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "wordfriend-frontend"
+  "defaultProject": "wordfriend-frontend",
+  "cli": {
+    "analytics": "f66e786e-8945-4ba5-95f2-d62f7704c272"
+  }
 }
