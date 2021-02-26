@@ -80,14 +80,16 @@
         top: 0;
         right: 0;
         height: 100%;
-        overflow: hidden auto;
+        overflow-x: hidden;
+        overflow-y: auto;
         background-color: transparent;
-        display: flex;
-        flex-flow: column nowrap;
+        display: block;
         color: $coffee;
         background-color: rgba(170, 29, 29, 0.2);
         border-radius: 20px 0 0 20px;
         .alphabet{
+            height: auto;
+            width: 100%;
             overflow-x: hidden;
             overflow-y: hidden;
             text-align: center;
