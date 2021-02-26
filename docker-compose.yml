@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+    volumes:
+      - /wordfriend/prod:/data/db
+
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+    depends_on:
+      - wordfriend-backend
+      - wordfriend-frontend
+
+  wordfriend-backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./wordfriend-backend
+    volumes:
+      - /app/node_modules
+      - ./wordfriend-backend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - mongodb=mongodb://mongo:27017/wordfriend
+      - port=3000
+      - mode=dev
+    restart: always
+    depends_on:
+      - mongo
+
+  wordfriend-frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./wordfriend-frontend
+    volumes:
+      - ./wordfriend-frontend:/app
+    ports:
+      - "4200:4200"
+    depends_on:
+      - mongo
+      - wordfriend-backend

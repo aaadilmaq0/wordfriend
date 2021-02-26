@@ -2,3 +2,4 @@ node_modules
 config.ts
 client.js
 .vscode
+dist
