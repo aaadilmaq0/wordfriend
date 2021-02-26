@@ -25,6 +25,7 @@ global.deleteUserTrie = user => {
 };
 
 dictionary.prototype.insert = (word,user) => {
+    word = word.toLowerCase();
     let curr = trie.children[user];
     for(let i = 0; i < word.length; i++){
         let char = word.charAt(i);
@@ -35,6 +36,7 @@ dictionary.prototype.insert = (word,user) => {
 };
 
 dictionary.prototype.search = (word,user) => {
+    word = word.toLowerCase();
     let curr = trie.children[user];
     for(let i = 0; i < word.length; i++){
         let char = word.charAt(i);
@@ -45,6 +47,7 @@ dictionary.prototype.search = (word,user) => {
 };
 
 dictionary.prototype.remove = (word,user) => {
+    word = word.toLowerCase();
     let nodestack = new Stack();
     let charstack = new Stack();
     let curr = trie.children[user];
@@ -76,6 +79,7 @@ dictionary.prototype.getAllWords = user => {
 };
 
 dictionary.prototype.getStartsWith = (char, user) => {
+    char = char.toLowerCase();
     let words = [];
     let curr = trie.children[user];
     if(!curr.children || !curr.children[char]) return words;
