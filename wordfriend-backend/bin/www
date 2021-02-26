@@ -1,17 +1,17 @@
 // Getting Express App
-const app = require("./app");
+const app = require("../app");
 
 // Starting Server & Handling Events
-require("./server")(app);
+require("../server")(app);
 
 // Configure Mongoose
-require("./mongo");
+require("../mongo");
 
 // Creating Global Trie
-require("./trie");
+require("../trie");
 
 // Creating Routes
-require("./routes")(app);
+require("../routes")(app);
 
 // Starting Scheduled Workers
-require("./workers");
+require("../workers");
